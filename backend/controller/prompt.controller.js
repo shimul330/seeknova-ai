@@ -9,7 +9,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-console.log("API Key loaded:", !!openai.apiKey);
+
 
 export const sendPrompt = async (req, res) => {
     const { content } = req.body;
