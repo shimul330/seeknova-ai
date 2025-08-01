@@ -21,9 +21,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }))
-
-//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
-//DB Connection code 
+ 
 mongoose.connect(MONGO_URL)
     .then(res => console.log("Connected to Mongodb"))
     .catch(err => console.log("DB Error", err))
