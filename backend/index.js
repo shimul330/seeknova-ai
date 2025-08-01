@@ -15,13 +15,26 @@ const MONGO_URL = process.env.MONGO_URI;
 //middleware
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://seeknova-ai.netlify.app'
+];
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}))
- 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+console.log("Allowed origin:", process.env.FRONTEND_URL);
+
 mongoose.connect(MONGO_URL)
     .then(res => console.log("Connected to Mongodb"))
     .catch(err => console.log("DB Error", err))
